@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detection Result</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      background: #f0f2f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 2rem;
+    }
+    .result-card {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .result-image {
+      object-fit: cover;
+      height: 400px;
+      width: 100%;
+    }
+    .badge-offensive { background: #dc3545; }
+    .badge-safe      { background: #28a745; }
+  </style>
+</head>
+<body>
+  <div class="result-card">
+    <img
+      src="{{ uploaded_image.image.url }}"
+      alt="Uploaded"
+      class="result-image"
+    />
+    <div class="card-body text-center">
+      <h2 class="card-title mb-3">Analysis Complete</h2>
+      <p class="mb-2">
+        <span class="fw-bold">Label:</span>
+        <span
+          class="badge {{ is_offensive|yesno:'badge-offensive,badge-safe' }} fs-5"
+        >
+          {{ label|title }}
+        </span>
+      </p>
+      <p class="mb-4">
+        <span class="fw-bold">Confidence:</span> {{ confidence }}
+      </p>
+      <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+        Analyze Another Image
+      </a>
+    </div>
+  </div>
+</body>
+</html>
